@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'angular-basic-httpclient';
+  activeTodo = false;
+  appPage = localStorage.getItem('isEntrance');
+
+  isHidden(active:any) {
+    this.appPage = active;
+  }
 }
