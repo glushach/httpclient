@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertService } from 'src/app/services/services/alert.service';
 
 @Component({
   selector: 'app-alert',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AlertComponent implements OnInit {
 
-  constructor() { }
+  constructor(public alertSvc: AlertService) { }
 
   ngOnInit(): void {
   }

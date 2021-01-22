@@ -2,14 +2,26 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
+export interface Todo {
+  date: number,
+  prior: number,
+  text: string,
+  done: boolean,
+  id: number
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
+  search = ''; //для поисковой строки
+
+  activeConfirm: boolean = false; //регулирует появление confirm
+  indexOfComfirm: number;
 
   private subj: BehaviorSubject<any> = new BehaviorSubject([]);
 
-  public items: any[] = [];
+  public items: Todo[] = [];
 
   constructor(public http: HttpClient) { }
   // поток
@@ -18,12 +30,51 @@ export class TaskService {
   }
 
   add(task: string) {
-    this.items.unshift({
+    const newTodo = {
       date: Date.now(),
       prior: 1,
       text: task,
-      done: false
-  });
-    this.subj.next(this.items); //передача в task.contatner
+      done: false,
+    }
+
+    this.http.post<Todo>('https://jsonplaceholder.typicode.com/todos', newTodo)
+    .subscribe(todo => {
+      let firstObjectWithBiggestId;
+      let biggestId;
+      if(this.items.length > 0) {
+        firstObjectWithBiggestId =  this.items.sort((a, b) => b.id - a.id);
+        biggestId = firstObjectWithBiggestId[0].id; //получение найбольшего id
+        todo.id = biggestId + 1; //кастомное id
+        this.items.unshift(todo)
+      } else {
+        todo.id = 1; //кастомное id
+        this.items.unshift(todo)
+      }
+      console.log('Todo', todo);
+      this.subj.next(this.items) //передача в стрим
+    });
   }
+
+
+
+   // Обработка ответа YES из confirm
+  removeTodo(id: number) {
+    this.activeConfirm = false;
+    this.http.delete<void>(`https://jsonplaceholder.typicode.com/todos/${id}`) //удалить с сервера
+    .subscribe( () => {
+      this.items = this.items.filter(t=> t.id !== id); //удалить со страницы
+      this.subj.next(this.items); //передача в стрим
+    })
+  }
+
+    // Для вызова модального окна confirm
+    onConfirm(id: number) {
+      this.activeConfirm = true;
+      this.indexOfComfirm = id; //получение индекса задачи
+      // console.log(this.indexOfComfirm); 
+    }
+    // Oбработки ответа NO
+    onNo() {
+      this.activeConfirm = false;
+    }
 }

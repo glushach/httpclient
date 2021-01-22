@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { TaskService } from 'src/app/services/task.service';
-
-export interface Todo {
-  completed: boolean,
-  title: string,
-  id?: number
-}
 
 @Component({
   selector: 'app-task-container',
@@ -16,16 +11,13 @@ export interface Todo {
 
 export class TaskContainerComponent implements OnInit {
 
-  todos: Todo[] = []
+  items: Observable<any>;
 
-  constructor(private taskSvc: TaskService) { }
+  
+  constructor(public taskSvc: TaskService) { }
 
-  ngOnInit(): void {
-    this.taskSvc.http.get<Todo[]>('https://jsonplaceholder.typicode.com/todos?_limit=2')
-      .subscribe( todos => {
-        console.log('Response',  todos);
-        this.todos =  todos;
-    });
+  ngOnInit() {
+    this.items = this.taskSvc.todos;
   }
 
 }

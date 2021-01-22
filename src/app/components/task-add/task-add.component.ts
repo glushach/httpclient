@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertService } from 'src/app/services/services/alert.service';
 import { TaskService } from 'src/app/services/task.service';
 
 @Component({
@@ -8,15 +9,15 @@ import { TaskService } from 'src/app/services/task.service';
 })
 export class TaskAddComponent implements OnInit {
   model: any = '';
-  constructor(private taskSvc: TaskService) { }
+  constructor(private taskSvc: TaskService, private alertSvc: AlertService) { }
 
   ngOnInit(): void {
   }
 
   add(){
     if(!this.model.length || this.model.length > 200){
-      // this.alertSvc.alertShow = true;
-      return window.alert('Min 1, Max 200 characters!');
+      this.alertSvc.alertShow = true;
+      // return window.alert('Min 1, Max 200 characters!');
     }
     if(this.model.trim()) {
       // Обрезание слишком длинных слов в предложении

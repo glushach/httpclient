@@ -4,6 +4,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AlertService {
-
+  alertShow = false;
   constructor() { }
+  onOk() {
+    this.alertShow = false;
+  }
 }
