@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { TaskService } from 'src/app/services/task.service';
+import { SortTasks } from 'src/app/services/services/sort-tasks.service';
+
 
 @Component({
   selector: 'app-sort-triggers',
@@ -7,7 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SortTriggersComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public taskSvc: TaskService, 
+    public SortDateSevc: SortTasks,
+
+  ) { }
 
   ngOnInit(): void {
   }

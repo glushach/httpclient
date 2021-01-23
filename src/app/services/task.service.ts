@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface Todo {
   date: number,
@@ -17,7 +17,7 @@ export class TaskService {
   search = ''; //для поисковой строки
 
   activeConfirm: boolean = false; //регулирует появление confirm
-  indexOfComfirm: number;
+  idOfComfirm: number;
 
   private subj: BehaviorSubject<any> = new BehaviorSubject([]);
 
@@ -67,14 +67,25 @@ export class TaskService {
     })
   }
 
-    // Для вызова модального окна confirm
-    onConfirm(id: number) {
-      this.activeConfirm = true;
-      this.indexOfComfirm = id; //получение индекса задачи
-      // console.log(this.indexOfComfirm); 
-    }
-    // Oбработки ответа NO
-    onNo() {
-      this.activeConfirm = false;
-    }
+  // Для вызова модального окна confirm
+  onConfirm(id: number) {
+    this.activeConfirm = true;
+    this.idOfComfirm = id; //получение индекса задачи
+    // console.log(this.idOfComfirm); 
+  }
+  // Oбработки ответа NO
+  onNo() {
+    this.activeConfirm = false;
+  }
+
+
+  // Реализация метода по редактированию текста задачи, выполненнности задачи, приоритета задачи
+  completeTodo(id: number): Observable<Todo> {
+    return this.http.put<Todo>(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+      prior: true,
+      text: true,
+      done: true
+    });
+  }
+
 }

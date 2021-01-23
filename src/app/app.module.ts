@@ -19,9 +19,8 @@ import { AlertService } from './services/services/alert.service';
 import { CheckedService } from './services/services/checked.service';
 import { EditorService } from './services/services/editor.service';
 import { PriorityService } from './services/services/priority.service';
-import { SortCheckedService } from './services/services/sort-checked.service';
-import { SortDateService } from './services/services/sort-date.service';
-import { SortPriorService } from './services/services/sort-prior.service';
+import { SortTasks } from './services/services/sort-tasks.service';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -33,7 +32,8 @@ import { SortPriorService } from './services/services/sort-prior.service';
     SortTriggersComponent,
     TaskAddComponent,
     EditorComponent,
-    TaskContainerComponent
+    TaskContainerComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
@@ -47,9 +47,7 @@ import { SortPriorService } from './services/services/sort-prior.service';
     CheckedService, 
     EditorService, 
     PriorityService, 
-    SortCheckedService, 
-    SortDateService, 
-    SortPriorService
+    SortTasks,
   ],
   bootstrap: [AppComponent]
 })

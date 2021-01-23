@@ -1,18 +1,18 @@
 <div class="sort-panel">
   <div class="triggers-data">
-    <div class="triggers-data__top">
+    <div class="triggers-data__top" (click)="this.SortDateSevc.onDateNew()">
       <img src="https://raw.githubusercontent.com/glushach/todo-list/master/arrows/data-sort-top.png" alt="">
     </div>
-    <div class="triggers-data__bottom">
+    <div class="triggers-data__bottom" (click)="this.SortDateSevc.onDateOld()">
       <img src="https://raw.githubusercontent.com/glushach/todo-list/master/arrows/data-sort-bottom.png" alt="">
     </div>
   </div>
   <div class="triggers-priority">
-    <div class="priority-sort__top">
+    <div class="priority-sort__top" (click)="this.SortDateSevc.onPriorTop()">
       <img src="https://raw.githubusercontent.com/glushach/todo-list/master/arrows/priority-sort-top.png" alt="">
     </div>
     <span class="priority-sort__reset">123</span>
-    <div class="priority-sort__bottom">
+    <div class="priority-sort__bottom" (click)="this.SortDateSevc.onPriorBottom()">
       <img src="https://raw.githubusercontent.com/glushach/todo-list/master/arrows/priority-sort-bottom.png" alt="">
     </div>
   </div>
@@ -21,11 +21,11 @@
       <img src="https://raw.githubusercontent.com/glushach/todo-list/master/icons/search.png" alt="">
     </div>
     <form class="search-form" action="#">
-        <input class="search__input" type="text" name="search" maxlength="50" autocomplete="on">
+        <input class="search__input" type="text" name="search" maxlength="50" autocomplete="on" [(ngModel)]="this.taskSvc.search">
     </form>
   </div>
   <div class="filters-labels">
-    <div class="filters-labels__icons">
+    <div class="filters-labels__icons" (click)="this.SortDateSevc.onChecked()">
       <img src="https://raw.githubusercontent.com/glushach/todo-list/master/icons/filter.png" alt="">
     </div>
   </div>

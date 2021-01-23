@@ -1,10 +1,10 @@
-<div class="editor editor_active1" id="modal-editor">
+<div [ngClass]="{'editor': !editorSvc.activeEditor, 'editor_active':  editorSvc.activeEditor}">
   <div class="modal-editor">
     <div class="modal-editor__subtitle">Edit task?</div>
     <form class="editor-form" action="#">
-      <textarea class="editor-form__textarea" name="task" maxlength="200" required></textarea>
-      <button class="editor-button" id="cancel">Cancel</button>
-      <button class="editor-button button-active" id="save">Save</button>
+      <textarea class="editor-form__textarea" name="task" maxlength="200" required [(ngModel)]="this.editorSvc.model"></textarea>
+      <button class="editor-button" (click)="this.editorSvc.onCancel()">Cancel</button>
+      <button class="editor-button button-active" (click)="this.editorSvc.onSave(editorSvc.idOfEditor)">Save</button>
     </form> 
   </div>
-</div> <!--конец модального окна изменения текста задачи-->
+</div> <!--конец модального окна изменения текста задачи--> 

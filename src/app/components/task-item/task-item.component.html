@@ -5,19 +5,21 @@
   <div class="priority">
     <div class="priority__current">{{data.prior}}</div>
     <div class="priority__triggers">
-      <div class="priority__top" >
+      <div class="priority__top" (click)="this.prioritySvs.increase(data.id)">
         <img src="https://raw.githubusercontent.com/glushach/todo-list/master/arrows/priority-top.png" alt="priority-top">
       </div>
-      <div class="priority__bottom" >
+      <div class="priority__bottom" (click)="this.prioritySvs.decrease(data.id)">
         <img src="https://raw.githubusercontent.com/glushach/todo-list/master/arrows/priority-bottom.png" alt="priority-bottom">
       </div>
     </div>
   </div>
-  <div class="task-description">{{data.text}}</div>
+  <div class="task-description" [ngClass]="{'task-description_active': !data.done, 'task-description_none': data.done}">{{data.text}}</div>
 
   <div class="editor-task">
-    <div class="icons-editor"></div>
-    <div class="icons-checked icons-checked_active" ></div>
+    <div class="icons-editor" (click)="this.editorSvc.onEditor(data.id, index)"></div>
+    <div class="icons-checked" (click)="this.checkedSvc.onChecked(data.id)"
+      [ngClass]="{'icons-checked_active': !data.done, 'icons-checked_none':  data.done}">
+    </div>
     <div class="icons-delete" (click)="this.taskSvc.onConfirm(data.id)"></div>
   </div>
   <!-- Модальное окно confirm. Каждому компоненту task-item будет навешено модальное окно -->
@@ -25,7 +27,3 @@
   <!-- Модальное окно редактирования -->
   <app-editor></app-editor>
 </div>
-
-<!-- [ngClass]="{'task-description_active': !data.done, 'task-description_none': data.done}">{{data.text}} -->
-
-<!-- [ngClass]="{'icons-checked_active': !data.done, 'icons-checked_none':  data.done}" -->
